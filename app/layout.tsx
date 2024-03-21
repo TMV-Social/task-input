@@ -1,5 +1,6 @@
 import './globals.css'
 
+import type { Viewport } from 'next'
 import Script from 'next/script'
 
 import Header from '@/components/Header'
@@ -14,6 +15,18 @@ export const metadata = {
   description: 'A simple task manager',
 }
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 1,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'cyan' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
+  ],
+  colorScheme: 'dark light',
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -24,7 +37,7 @@ export default function RootLayout({
       <body className='bg-background text-foreground'>
         <main className='min-h-screen flex flex-col items-center gap-y-4'>
           <Header />
-          <Script id='harvest' strategy='afterInteractive'>
+          <Script id='harvest' strategy='beforeInteractive'>
             {`
               window._harvestPlatformConfig = {
                 "applicationName": "TMV Social",
@@ -34,7 +47,7 @@ export default function RootLayout({
           </Script>
           <Script
             src='https://platform.harvestapp.com/assets/platform.js'
-            strategy='afterInteractive'
+            strategy='beforeInteractive'
             async
           />
           {children}

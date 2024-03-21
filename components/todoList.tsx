@@ -8,7 +8,7 @@ export default function TodoList({
   user: Users
 }) {
   return (
-    <ul className='list-none'>
+    <ul className='list-none flex flex-col'>
       {todos.map((todo, index) => (
         <Todo key={index} todo={todo} index={index} user={user} />
       ))}

@@ -1,8 +1,6 @@
 'use client'
 import { useState } from 'react'
 
-import { addTodo } from './actions'
-
 export function InputForm({
   user,
   addTodoItem,
@@ -21,14 +19,20 @@ export function InputForm({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='w-full flex mx-auto gap-x-1'>
       <input
         type='text'
         value={taskText}
         onChange={(e) => setTaskText(e.target.value)}
         placeholder='Enter a task'
+        className='w-full rounded-sm basis-4/5 bg-transparent border-b'
       />
-      <button type='submit'>Add Todo</button>
+      <button
+        className='bg-gray-800 p-2 rounded-sm hover:bg-gray-900 basis-1/5'
+        type='submit'
+      >
+        Add
+      </button>
     </form>
   )
 }

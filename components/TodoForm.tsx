@@ -1,9 +1,9 @@
 'use client'
 
-import Script from 'next/script'
 import { useState } from 'react'
 
-import { addTodo } from './actions'
+import { addTodo } from '@/app/tasks/actions'
+
 import { InputForm } from './inputForm'
 import TodoList from './todoList'
 
@@ -30,9 +30,9 @@ export function TodoForm({
   }
 
   return (
-    <>
+    <div className='flex flex-col gap-y-10'>
       <InputForm user={user} addTodoItem={addTodoItem} />
       <TodoList todos={todos} user={user} />
-    </>
+    </div>
   )
 }

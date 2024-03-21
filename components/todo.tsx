@@ -2,7 +2,7 @@
 import { ClockIcon } from '@heroicons/react/24/outline'
 import { useEffect, useRef, useState } from 'react'
 
-import { toggleTodo } from './actions'
+import { toggleTodo } from '@/app/tasks/actions'
 
 export function Todo({
   todo,
@@ -37,6 +37,8 @@ export function Todo({
         harvestMessaging.dispatchEvent(event)
       } else {
         console.error('Element #harvest-messaging not found')
+        // Try again in 1 second
+        setTimeout(handleHarvestReady, 1000)
       }
     }
 
@@ -61,6 +63,14 @@ export function Todo({
       harvestMessaging.dispatchEvent(event)
     } else {
       console.error('Element #harvest-messaging not found')
+      // Try again in 1 second
+      setTimeout(() => {
+        const harvestMessagingRetry =
+          document.querySelector('#harvest-messaging')
+        if (harvestMessagingRetry) {
+          harvestMessagingRetry.dispatchEvent(event)
+        }
+      }, 1000)
     }
   }, [todo])
 
@@ -68,29 +78,44 @@ export function Todo({
     <li
       id={`${todo.id}`}
       key={index}
-      className='mb-2 flex items-center justify-start'
+      className='flex items-center justify-start gap-x-4 group max-w-[65ch] py-4 border-b'
     >
-      <input
-        type='checkbox'
-        id={`todo-${index}`}
-        className='mr-2'
-        checked={isChecked === null ? undefined : isChecked}
-        onChange={() => handleToggle(todo, user)}
-      />
+      <div className='relative'>
+        <input
+          type='checkbox'
+          id={`todo-${index}`}
+          className='w-5 h-5 border-2 cursor-pointer rounded-full appearance-none checked:bg-gray-800 checked:border-0 relative peer shrink-0'
+          checked={isChecked === null ? undefined : isChecked}
+          onChange={() => handleToggle(todo, user)}
+        />
+        <svg
+          className='absolute w-4 h-4 hidden peer-checked:block pointer-events-none top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-2/3'
+          xmlns='http://www.w3.org/2000/svg'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='4'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        >
+          <polyline points='20 6 9 17 4 12'></polyline>
+        </svg>
+      </div>
       <label
         htmlFor={`todo-${index}`}
-        className={isChecked ? 'line-through' : ''}
+        className={`text-left w-full ${isChecked ? 'line-through' : ''}`}
       >
         {todo.task}
       </label>
+
       <div
         ref={timerRef}
         id={`todo-${index}`}
-        className='harvest-timer w-4 h-4 ml-2 cursor-pointer'
+        className='harvest-timer ml-2 cursor-pointer'
         data-item={`{"id":${todo.id},"name":"${todo.task}"}`}
         data-permalink={`{"https://task-input-tmv.vercel.app/tasks#${todo.id}"}`}
       >
-        <ClockIcon />
+        <ClockIcon className='w-5 h-5 text-transparent group-hover:text-gray-400' />
       </div>
     </li>
   )

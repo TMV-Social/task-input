@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation'
 
+import { TodoForm } from '@/components/TodoForm'
 import { createClient } from '@/utils/supabase/server'
 
 import { getTodoList } from './actions'
-import { TodoForm } from './TodoForm'
 
 export default async function Task() {
   const supabase = createClient()
