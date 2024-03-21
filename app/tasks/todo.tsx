@@ -9,7 +9,7 @@ export function Todo({
   user,
   index,
 }: {
-  todo: any
+  todo: Todos
   user: any
   index: number
 }) {
@@ -31,7 +31,7 @@ export function Todo({
         type='checkbox'
         id={`todo-${index}`}
         className='mr-2'
-        checked={isChecked}
+        checked={isChecked === null ? undefined : isChecked}
         onChange={() => handleToggle(todo, user)}
       />
       <label

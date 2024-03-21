@@ -31,6 +31,9 @@ export async function getTodoList(user: any) {
 }
 
 export async function addTodo(taskText: string, user: any) {
+  if (!user || !user.id) {
+    throw new Error('User is not defined or has no id')
+  }
   const supabase = createClient()
   let task = taskText.trim()
   if (task.length) {

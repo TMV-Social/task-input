@@ -1,19 +1,23 @@
-import { getAuthenticatedUser, getTodoList } from './actions'
-import { InputForm } from './inputForm'
-import { Todo } from './todo'
+import { redirect } from 'next/navigation'
+
+import { createClient } from '@/utils/supabase/server'
+
+import { getTodoList } from './actions'
+import { TodoForm } from './TodoForm'
 
 export default async function Task() {
-  const user = await getAuthenticatedUser()
-  const todoList = await getTodoList(user)
+  const supabase = createClient()
+  const { data, error } = await supabase.auth.getUser()
+  if (error || !data?.user) {
+    redirect('/login')
+  }
+  const user = data.user
+
+  const todos = await getTodoList(user)
 
   return (
     <div className='flex-1 w-full flex flex-col gap-20 items-center'>
-      <InputForm />
-      <ul className='list-none'>
-        {todoList.map((todo, index) => (
-          <Todo key={index} todo={todo} index={index} user={user} />
-        ))}
-      </ul>
+      <TodoForm user={user} currentTodos={todos} />
     </div>
   )
 }
