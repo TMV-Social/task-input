@@ -1,5 +1,7 @@
 import './globals.css'
 
+import Script from 'next/script'
+
 import Header from '@/components/Header'
 
 const defaultUrl = process.env.VERCEL_URL
@@ -20,8 +22,21 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className='bg-background text-foreground'>
-        <main className='min-h-screen flex flex-col items-center gap-4'>
+        <main className='min-h-screen flex flex-col items-center gap-y-4'>
           <Header />
+          <Script id='harvest' strategy='afterInteractive'>
+            {`
+              window._harvestPlatformConfig = {
+                "applicationName": "TMV Social",
+                "skipStyling": true
+              };
+            `}
+          </Script>
+          <Script
+            src='https://platform.harvestapp.com/assets/platform.js'
+            strategy='afterInteractive'
+            async
+          />
           {children}
         </main>
       </body>
