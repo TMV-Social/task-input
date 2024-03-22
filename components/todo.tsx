@@ -69,7 +69,7 @@ export function Todo({ todo, user }: { todo: Todos; user: Users }) {
   return (
     <li
       id={`${todo.id}`}
-      className="group flex w-[65ch] items-center justify-start gap-x-4 border-b py-4"
+      className="group flex w-full items-center justify-start gap-x-4 border-b py-4 md:w-[65ch]"
     >
       <div className="relative">
         <input
@@ -94,7 +94,7 @@ export function Todo({ todo, user }: { todo: Todos; user: Users }) {
       </div>
       <label
         htmlFor={`todo-${todo.id}`}
-        className={`w-full max-w-[65ch] text-left ${isChecked ? 'text-gray-500 line-through' : ''}`}
+        className={`w-full text-left ${isChecked ? 'text-gray-500 line-through' : ''}`}
       >
         {todo.task}
       </label>
@@ -106,7 +106,7 @@ export function Todo({ todo, user }: { todo: Todos; user: Users }) {
         data-item={`{"id":${todo.id},"name":"${todo.task}"}`}
         data-permalink={`{"https://task-input-tmv.vercel.app/tasks#${todo.id}"}`}
       >
-        <ClockIcon className="h-5 w-5 text-transparent group-hover:text-gray-400" />
+        <ClockIcon className="h-5 w-5 group-hover:text-gray-400 md:text-transparent" />
       </div>
     </li>
   )
