@@ -3,8 +3,6 @@ import './globals.css'
 import type { Viewport } from 'next'
 import Script from 'next/script'
 
-import Header from '@/components/Header'
-
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
@@ -33,11 +31,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang='en'>
-      <body className='bg-background text-foreground'>
-        <main className='min-h-screen flex flex-col items-center gap-y-4'>
-          <Header />
-          <Script id='harvest' strategy='beforeInteractive'>
+    <html lang="en">
+      <body className="bg-background text-foreground">
+        <main className="flex min-h-screen flex-col items-center gap-y-4">
+          <Script id="harvest" strategy="beforeInteractive">
             {`
               window._harvestPlatformConfig = {
                 "applicationName": "TMV Social",
@@ -46,8 +43,8 @@ export default function RootLayout({
             `}
           </Script>
           <Script
-            src='https://platform.harvestapp.com/assets/platform.js'
-            strategy='beforeInteractive'
+            src="https://platform.harvestapp.com/assets/platform.js"
+            strategy="beforeInteractive"
             async
           />
           {children}

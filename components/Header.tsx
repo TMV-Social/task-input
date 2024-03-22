@@ -15,8 +15,8 @@ export default function Header() {
   const isSupabaseConnected = canInitSupabaseClient()
 
   return (
-    <nav className='container mx-auto px-5 flex flex-col gap-16 items-end border-b border-b-foreground/10 h-16'>
-      <div className='max-w-2xl p-3 text-sm'>
+    <nav className="container mx-auto flex h-16 flex-col items-end gap-16 border-b border-b-foreground/10 px-5">
+      <div className="max-w-2xl p-3 text-sm">
         {isSupabaseConnected && <AuthButton />}
       </div>
     </nav>

@@ -16,8 +16,8 @@ export default async function Task() {
   const todos = await getTodoList(user)
 
   return (
-    <div className='container px-4 gap-y-20 flex-1 w-full flex flex-col items-center'>
-      <TodoForm user={user} currentTodos={todos} />
+    <div className="container mt-20 flex w-full flex-1 flex-col items-center gap-y-20 px-4">
+      <TodoForm user={user} todos={todos} />
     </div>
   )
 }

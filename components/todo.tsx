@@ -4,15 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { toggleTodo } from '@/app/tasks/actions'
 
-export function Todo({
-  todo,
-  user,
-  index,
-}: {
-  todo: Todos
-  user: Users
-  index: number
-}) {
+export function Todo({ todo, user }: { todo: Todos; user: Users }) {
   const [isChecked, setIsChecked] = useState(todo.is_complete)
   const timerRef = useRef(null) // Create a ref
 
@@ -48,10 +40,10 @@ export function Todo({
     return () => {
       document.body.removeEventListener(
         'harvest-event:ready',
-        handleHarvestReady
+        handleHarvestReady,
       )
     }
-  }, [index])
+  }, [todo.id])
 
   // useEffect hook for when a new todo is added
   useEffect(() => {
@@ -77,45 +69,44 @@ export function Todo({
   return (
     <li
       id={`${todo.id}`}
-      key={index}
-      className='flex items-center justify-start gap-x-4 group max-w-[65ch] py-4 border-b'
+      className="group flex w-[65ch] items-center justify-start gap-x-4 border-b py-4"
     >
-      <div className='relative'>
+      <div className="relative">
         <input
-          type='checkbox'
-          id={`todo-${index}`}
-          className='w-5 h-5 border-2 cursor-pointer rounded-full appearance-none checked:bg-gray-800 checked:border-0 relative peer shrink-0'
+          type="checkbox"
+          id={`todo-${todo.id}`}
+          className="peer relative h-5 w-5 shrink-0 cursor-pointer appearance-none rounded-full border-2 checked:border-0 checked:bg-gray-800"
           checked={isChecked === null ? undefined : isChecked}
           onChange={() => handleToggle(todo, user)}
         />
         <svg
-          className='absolute w-4 h-4 hidden peer-checked:block pointer-events-none top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-2/3'
-          xmlns='http://www.w3.org/2000/svg'
-          viewBox='0 0 24 24'
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='4'
-          strokeLinecap='round'
-          strokeLinejoin='round'
+          className="pointer-events-none absolute left-1/2 top-1/2 hidden h-4 w-4 -translate-x-1/2 -translate-y-2/3 transform text-gray-500 peer-checked:block"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
-          <polyline points='20 6 9 17 4 12'></polyline>
+          <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
       </div>
       <label
-        htmlFor={`todo-${index}`}
-        className={`text-left w-full ${isChecked ? 'line-through' : ''}`}
+        htmlFor={`todo-${todo.id}`}
+        className={`w-full max-w-[65ch] text-left ${isChecked ? 'text-gray-500 line-through' : ''}`}
       >
         {todo.task}
       </label>
 
       <div
         ref={timerRef}
-        id={`todo-${index}`}
-        className='harvest-timer ml-2 cursor-pointer'
+        id={`todo-${todo.id}`}
+        className="harvest-timer ml-2 cursor-pointer"
         data-item={`{"id":${todo.id},"name":"${todo.task}"}`}
         data-permalink={`{"https://task-input-tmv.vercel.app/tasks#${todo.id}"}`}
       >
-        <ClockIcon className='w-5 h-5 text-transparent group-hover:text-gray-400' />
+        <ClockIcon className="h-5 w-5 text-transparent group-hover:text-gray-400" />
       </div>
     </li>
   )

@@ -2,17 +2,6 @@
 
 import { createClient } from '@/utils/supabase/server'
 
-export async function getAuthenticatedUser() {
-  const supabase = createClient()
-  const userResponse = await supabase.auth.getUser()
-
-  if (!userResponse.data.user) {
-    throw new Error('User is not authenticated')
-  }
-
-  return userResponse.data.user
-}
-
 export async function getTodoList(user: any) {
   const supabase = createClient()
 
@@ -21,6 +10,7 @@ export async function getTodoList(user: any) {
     .select('*')
     .eq('user_id', user.id)
     .order('id', { ascending: true })
+    .filter('is_complete', 'eq', false)
 
   if (error) {
     console.error('Error fetching todos:', error)
