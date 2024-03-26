@@ -4,10 +4,19 @@ import { useState } from 'react'
 
 import { addTodo } from '@/app/tasks/actions'
 
+import CompletedTodoList from './CompletedTodoList'
 import { InputForm } from './inputForm'
 import TodoList from './todoList'
 
-export function TodoForm({ user, todos }: { user: Users; todos: Todos[] }) {
+export function TodoForm({
+  user,
+  todos,
+  completedTodos,
+}: {
+  user: Users
+  todos: Todos[]
+  completedTodos: Todos[]
+}) {
   const [todosList, setTodosList] = useState<Todos[]>(todos)
 
   const addTodoItem = async (taskText: string, user: Users) => {
@@ -26,7 +35,8 @@ export function TodoForm({ user, todos }: { user: Users; todos: Todos[] }) {
   return (
     <div className="flex flex-col gap-y-10">
       <InputForm user={user} addTodoItem={addTodoItem} />
-      <TodoList todos={todosList} user={user} />
+      <TodoList todos={todosList} user={user} enableTimer={true} />
+      <CompletedTodoList completedTodos={completedTodos} user={user} />
     </div>
   )
 }

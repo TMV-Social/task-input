@@ -20,6 +20,24 @@ export async function getTodoList(user: any) {
   return todos
 }
 
+export async function getCompletedTodoList(user: any) {
+  const supabase = createClient()
+
+  const { data: todos, error } = await supabase
+    .from('todos')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('id', { ascending: true })
+    .filter('is_complete', 'eq', true)
+
+  if (error) {
+    console.error('Error fetching todos:', error)
+    throw error
+  }
+
+  return todos
+}
+
 export async function addTodo(taskText: string, user: any) {
   if (!user || !user.id) {
     throw new Error('User is not defined or has no id')

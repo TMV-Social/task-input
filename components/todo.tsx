@@ -4,7 +4,15 @@ import { useEffect, useRef, useState } from 'react'
 
 import { toggleTodo } from '@/app/tasks/actions'
 
-export function Todo({ todo, user }: { todo: Todos; user: Users }) {
+export function Todo({
+  todo,
+  user,
+  enableTimer,
+}: {
+  todo: Todos
+  user: Users
+  enableTimer?: boolean
+}) {
   const [isChecked, setIsChecked] = useState(todo.is_complete)
   const timerRef = useRef(null) // Create a ref
 
@@ -98,16 +106,17 @@ export function Todo({ todo, user }: { todo: Todos; user: Users }) {
       >
         {todo.task}
       </label>
-
-      <div
-        ref={timerRef}
-        id={`todo-${todo.id}`}
-        className="harvest-timer ml-2 cursor-pointer"
-        data-item={`{"id":${todo.id},"name":"${todo.task}"}`}
-        data-permalink={`{"https://task-input-tmv.vercel.app/tasks#${todo.id}"}`}
-      >
-        <ClockIcon className="h-5 w-5 group-hover:text-gray-400 md:text-transparent" />
-      </div>
+      {enableTimer && (
+        <div
+          ref={timerRef}
+          id={`todo-${todo.id}`}
+          className="harvest-timer ml-2 cursor-pointer"
+          data-item={`{"id":${todo.id},"name":"${todo.task}"}`}
+          data-permalink={`{"https://task-input-tmv.vercel.app/tasks#${todo.id}"}`}
+        >
+          <ClockIcon className="h-5 w-5 group-hover:text-gray-400 md:text-transparent" />
+        </div>
+      )}
     </li>
   )
 }
