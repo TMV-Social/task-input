@@ -1,20 +1,20 @@
 export default function createMarkup(content: string) {
   // Split the content at each newline and map each part to a <li> element
   const listItemsHtml = content
-    .split('\n')
+    .split("\n")
     .map((part) => {
       // Detect URLs starting with "https://" and replace them with clickable links
-      const urlRegex = /https:\/\/[^\s]+/g
+      const urlRegex = /https:\/\/[^\s]+/g;
       const partWithLinks = part.replace(
         urlRegex,
         (url) => `<a href="${url}" target="_blank">${url}</a>`,
-      )
-      return `<li>${partWithLinks}</li>`
+      );
+      return `<li>${partWithLinks}</li>`;
     })
-    .join('')
+    .join("");
 
   // Sanitize the content to prevent XSS attacks if it's user-generated
   // Example: const safeContent = DOMPurify.sanitize(listItemsHtml);
 
-  return { __html: listItemsHtml /* or safeContent if sanitized */ }
+  return { __html: listItemsHtml /* or safeContent if sanitized */ };
 }

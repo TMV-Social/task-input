@@ -12,7 +12,7 @@ const MenuComponent = () => {
 
   return (
     <nav>
-      <ul className="flex w-full flex-col items-center gap-16 md:flex-row md:justify-end">
+      <ul className="flex w-full flex-row items-center gap-16 md:justify-end">
         {menuItems.map((item) => (
           <li key={item.name}>
             <Link href={item.path}>{item.name}</Link>
@@ -36,8 +36,8 @@ export default function Header() {
   const isSupabaseConnected = canInitSupabaseClient()
 
   return (
-    <nav className="container mx-auto h-16 items-end border-b border-b-foreground/10 p-5">
-      <ul className="flex w-full flex-col items-center gap-16 md:flex-row md:justify-end">
+    <nav className="container mx-auto h-16 items-end border-b border-b-foreground/10 p-5 print:hidden">
+      <ul className="flex w-full flex-col items-center md:flex-row md:justify-end md:gap-16">
         <MenuComponent />
         <li className="max-w-2xl text-sm">
           {isSupabaseConnected && <AuthButton />}

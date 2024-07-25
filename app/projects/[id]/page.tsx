@@ -37,29 +37,29 @@ export default async function Project({ params }: { params: { id: any } }) {
   const entries = await getProjectEntries(projectId)
 
   return (
-    <div className="prose dark:prose-invert">
-      <Suspense fallback={<div>Loading...</div>}>
-        <div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="container prose flex-row px-5 dark:prose-invert prose-a:break-words">
+        <Suspense fallback={<div>Loading...</div>}>
           <h1 className="text-lg font-semibold">{project.name}</h1>
           <p>{project.description}</p>
-        </div>
-      </Suspense>
-      <Suspense fallback={<div>Loading...</div>}>
-        <div className="flex-row gap-2">
-          <h4>Outline</h4>
-          <ol>
-            {steps.map((step) => (
-              <li key={step.id}>
-                {/* Use an anchor tag with href pointing to the id */}
-                <a href={`#step-${step.id}`}>{step.name}</a>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </Suspense>
-      <Suspense fallback={<div>Loading...</div>}>
-        <ProjectEntries entries={entries} />
-      </Suspense>
-    </div>
+        </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <div className="flex-row gap-2 print:hidden">
+            <h4>Outline</h4>
+            <ol>
+              {steps.map((step) => (
+                <li key={step.id}>
+                  {/* Use an anchor tag with href pointing to the id */}
+                  <a href={`#step-${step.id}`}>{step.name}</a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ProjectEntries entries={entries} />
+        </Suspense>
+      </div>
+    </Suspense>
   )
 }
