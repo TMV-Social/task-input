@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
 
 import { TodoForm } from '@/components/TodoForm'
 import { createClient } from '@/utils/supabase/server'
@@ -17,8 +18,10 @@ export default async function Task() {
   const completedTodos = await getCompletedTodoList(user)
 
   return (
-    <div className="mt-20 flex flex-1 flex-col items-center gap-y-20 px-4">
-      <TodoForm user={user} todos={todos} completedTodos={completedTodos} />
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="mt-20 flex flex-1 flex-col items-center gap-y-20 px-4">
+        <TodoForm user={user} todos={todos} completedTodos={completedTodos} />
+      </div>
+    </Suspense>
   )
 }

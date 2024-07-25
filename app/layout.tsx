@@ -2,6 +2,9 @@ import './globals.css'
 
 import type { Viewport } from 'next'
 import Script from 'next/script'
+import { Suspense } from 'react'
+
+import Header from '@/components/Header'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -46,7 +49,8 @@ export default function RootLayout({
         async
       />
       <body className="bg-background text-foreground">
-        <main className="flex min-h-screen flex-col items-center gap-y-4">
+        <Header />
+        <main className="flex min-h-screen flex-col items-center gap-y-4 pt-2">
           {children}
         </main>
       </body>

@@ -1,6 +1,27 @@
+import Link from 'next/link'
+
 import { createClient } from '@/utils/supabase/server'
 
 import AuthButton from '../components/AuthButton'
+
+const MenuComponent = () => {
+  const menuItems = [
+    { name: 'Projects', path: '/projects' },
+    { name: 'Tasks', path: '/tasks' },
+  ]
+
+  return (
+    <nav>
+      <ul className="flex w-full flex-col items-center gap-16 md:flex-row md:justify-end">
+        {menuItems.map((item) => (
+          <li key={item.name}>
+            <Link href={item.path}>{item.name}</Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
 
 export default function Header() {
   const canInitSupabaseClient = () => {
@@ -15,10 +36,13 @@ export default function Header() {
   const isSupabaseConnected = canInitSupabaseClient()
 
   return (
-    <nav className="container mx-auto flex h-16 flex-col items-end gap-16 border-b border-b-foreground/10 px-5">
-      <div className="max-w-2xl p-3 text-sm">
-        {isSupabaseConnected && <AuthButton />}
-      </div>
+    <nav className="container mx-auto h-16 items-end border-b border-b-foreground/10 p-5">
+      <ul className="flex w-full flex-col items-center gap-16 md:flex-row md:justify-end">
+        <MenuComponent />
+        <li className="max-w-2xl text-sm">
+          {isSupabaseConnected && <AuthButton />}
+        </li>
+      </ul>
     </nav>
   )
 }
